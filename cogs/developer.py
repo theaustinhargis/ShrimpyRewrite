@@ -21,7 +21,7 @@ class Developer(commands.Cog):
         else:
             await ctx.respond(f'You don\'t have permission to use this command.')
 
-    @commands.slash_command(name="load_ext", description="Loads specified extension")
+    @commands.slash_command(name="load_extension", description="Loads specified extension")
     async def load_cog(self, ctx, extension: discord.Option(discord.SlashCommandOptionType.string, description="An extension for Shrimpy")):
         try:
             if ctx.author.id == int(os.getenv('OWNER')):
