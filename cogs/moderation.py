@@ -4,6 +4,8 @@ from discord.ext import commands
 
 class Moderation(commands.Cog):
 
+    moderation = discord.SlashCommandGroup(name="moderate", description="A group of all moderation related commands")
+
     def __init__(self, bot):
         self.bot = bot
 
