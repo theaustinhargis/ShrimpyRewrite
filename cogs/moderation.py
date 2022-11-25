@@ -18,8 +18,10 @@ class Moderation(commands.Cog):
         pass
 
     @commands.slash_command(name="kick_user", description="Kicks a specified user")
-    async def kick_user(self, ctx, user: discord.Member):
-        pass
+    @commands.has_permissions(kick_members=True)
+    async def kick_user(self, ctx, user: discord.Member, reason: discord.SlashCommandOptionType.string):
+        await ctx.guild.kick(user, reason=reason)
+        await ctx.respond(f"Member {user} has been kicked.")
 
     @commands.slash_command(name="mute_user", description="Mutes a specified user")
     async def mute_user(self, ctx, user: discord.Member):
