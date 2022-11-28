@@ -10,10 +10,13 @@ class Moderation(commands.Cog):
         self.bot = bot
 
     @commands.slash_command(name="ban_user", description="Bans a specified user")
-    async def ban_user(self, ctx, user: discord.Member):
-        pass
+    @commands.has_permissions(ban_members=True)
+    async def ban_user(self, ctx, user: discord.Member, reason: discord.SlashCommandOptionType.string):
+        await ctx.guild.ban(user, reason=reason)
+        await ctx.respond(f"Member {user} has been banned.")
 
     @commands.slash_command(name="unban_user", description="Unbans a specified user")
+    @commands.has_permissions(ban_members=True)
     async def unban_user(self, ctx, user: discord.Member):
         pass
 
