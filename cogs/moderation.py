@@ -17,8 +17,9 @@ class Moderation(commands.Cog):
 
     @commands.slash_command(name="unban_user", description="Unbans a specified user")
     @commands.has_permissions(ban_members=True)
-    async def unban_user(self, ctx, user: discord.Member):
-        pass
+    async def unban_user(self, ctx, user: discord.Member, reason: discord.SlashCommandOptionType.string):
+        await ctx.guild.unban(user, reason=reason)
+        await ctx.respond(f"Member {user} has been unbanned.")
 
     @commands.slash_command(name="kick_user", description="Kicks a specified user")
     @commands.has_permissions(kick_members=True)
