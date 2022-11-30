@@ -1,3 +1,4 @@
+import datetime
 import discord
 from discord.ext import commands
 
@@ -27,13 +28,17 @@ class Moderation(commands.Cog):
         await ctx.guild.kick(user, reason=reason)
         await ctx.respond(f"Member {user} has been kicked.")
 
-    @commands.slash_command(name="mute_user", description="Mutes a specified user")
-    async def mute_user(self, ctx, user: discord.Member):
-        pass
+    @commands.slash_command(name="timeout_user", description="Puts the specified user in timeout")
+    @commands.has_permissions(moderate_members=True)
+    async def mute_user(self, ctx, time: discord.SlashCommandOptionType.integer, user: discord.Member, reason: discord.SlashCommandOptionType.string):
+        await user.timeout_for(datetime.timedelta(minutes=time), reason=reason)
+        await ctx.respond(f"Member <@{user.id}> was put in timeout. Naughty boy.")
 
-    @commands.slash_command(name="unmute_user", description="Unmutes a specified user")
+    @commands.slash_command(name="remove_timeout", description="Removes the specified user from timeout")
+    @commands.has_permissions(moderate_members=True)
     async def unmute_user(self, ctx, user: discord.Member):
-        pass
+        await user.remove_timeout()
+        await ctx.respond(f"Member <@{user.id}> was removed from timeout.")
 
 
 def setup(bot):
