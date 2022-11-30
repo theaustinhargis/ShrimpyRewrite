@@ -15,8 +15,10 @@ class Games(commands.Cog):
     async def ping(self, ctx):
         await ctx.respond(f"Pong!")
 
-    @games.command(name="random", description="Get a random number generated for you")
-    async def randomnum(self, ctx, num1: discord.Option(discord.SlashCommandOptionType.integer), num2: discord.Option(discord.SlashCommandOptionType.integer)):
+    @games.command(name="random", description="Get a random number generated for you (defaults to 100 num2 isn't specified)")
+    async def randomnum(self, ctx, num1: discord.Option(discord.SlashCommandOptionType.integer), num2: discord.Option(discord.SlashCommandOptionType.integer, required=False)):
+        if num2 is None:
+            num2 = 100
         randnum = random.randint(num1, num2)
         await ctx.respond(f"Your random number between {num1} and {num2} is {randnum}!")
 
