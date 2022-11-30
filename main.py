@@ -22,11 +22,11 @@ async def on_application_command_error(ctx: discord.ApplicationContext, error: d
         await ctx.respond(f'Cog {ctx} was not found, please try again.')
     elif isinstance(error, discord.NoEntryPointError):
         await ctx.respond(f'Cog {ctx} has no setup function. Please correct this or contact the cog\'s developer')
-    elif isinstance(error, discord.ApplicationCommandInvokeError):
-        await ctx.respond(f'If you are seeing this error, you may not have permissions to use this command.')
+    # elif isinstance(error, discord.ApplicationCommandInvokeError):
+    #     await ctx.respond(f'If you are seeing this error, you may not have permissions to use this command.')
     else:
+        await ctx.respond(f"An uncaught error occurred. Please contact the developer at the link in the /about command.")
         raise error
-
 
 @bot.event
 async def on_member_join(member):
