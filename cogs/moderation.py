@@ -30,9 +30,9 @@ class Moderation(commands.Cog):
 
     @commands.slash_command(name="timeout_user", description="Puts the specified user in timeout")
     @commands.has_permissions(moderate_members=True)
-    async def mute_user(self, ctx, time: discord.SlashCommandOptionType.integer, user: discord.Member, reason: discord.SlashCommandOptionType.string):
+    async def mute_user(self, ctx, time: discord.Option(int, description='minutes', required=True), user: discord.Member, reason: discord.Option(discord.SlashCommandOptionType.string, required=False)):
         await user.timeout_for(datetime.timedelta(minutes=time), reason=reason)
-        await ctx.respond(f"Member <@{user.id}> was put in timeout. Naughty boy.")
+        await ctx.respond(f"Member <@{user.id}> was put in timeout.")
 
     @commands.slash_command(name="remove_timeout", description="Removes the specified user from timeout")
     @commands.has_permissions(moderate_members=True)
