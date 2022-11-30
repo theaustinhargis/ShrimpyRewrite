@@ -16,17 +16,17 @@ bot = discord.Bot()
 
 
 @bot.event
-async def on_application_command_error(ctx: discord.ApplicationContext, error: discord.DiscordException):
+async def on_application_command_error(context: discord.ApplicationContext, error: discord.DiscordException):
     if isinstance(error, discord.ExtensionAlreadyLoaded):
-        await ctx.respond(f"Cog {ctx} is already loaded.")
+        await context.respond(f"Cog {context} is already loaded.")
     elif isinstance(error, discord.ExtensionNotFound):
-        await ctx.respond(f"Cog {ctx} was not found, please try again.")
+        await context.respond(f"Cog {context} was not found, please try again.")
     elif isinstance(error, discord.NoEntryPointError):
-        await ctx.respond(f"Cog {ctx} has no setup function. Please correct this or contact the cog\'s developer")
+        await context.respond(f"Cog {context} has no setup function. Please correct this or contact the cog\'s developer")
     # elif isinstance(error, discord.ApplicationCommandInvokeError):
     #     await ctx.respond(f'If you are seeing this error, you may not have permissions to use this command.')
     else:
-        await ctx.respond(f"An uncaught error occurred. Please contact the developer at the link in the /about command.")
+        await context.respond(f"An uncaught error occurred. Please contact the developer at the link in the /about command.")
         raise error
 
 

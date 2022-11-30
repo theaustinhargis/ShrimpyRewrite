@@ -8,7 +8,7 @@ class Misc(commands.Cog):
         self.bot = bot
 
     @commands.slash_command(name="about", description="Provides information about Shrimpy")
-    async def about(self, ctx):
+    async def about(self, context):
         embed = discord.Embed(
             title="Shrimpy",
             description="Version: 0.2.0a",
@@ -21,7 +21,7 @@ class Misc(commands.Cog):
         embed.set_author(name="Austin Hargis", icon_url='https://avatars.githubusercontent.com/u/25471876?v=4')
         embed.set_footer(text="Created by Austin Hargis & Contributors - 09/29/22")
 
-        await ctx.respond(embed=embed)
+        await context.respond(embed=embed)
 
 
 def setup(bot):
