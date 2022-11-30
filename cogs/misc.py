@@ -11,7 +11,7 @@ class Misc(commands.Cog):
     async def about(self, ctx):
         embed = discord.Embed(
             title="Shrimpy",
-            description="Version: 0.1.0a",
+            description="Version: 0.2.0a",
             color=discord.Color.blurple()
         )
 
