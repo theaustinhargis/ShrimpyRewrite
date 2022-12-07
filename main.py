@@ -26,7 +26,8 @@ async def on_application_command_error(context: discord.ApplicationContext, erro
     # elif isinstance(error, discord.ApplicationCommandInvokeError):
     #     await ctx.respond(f'If you are seeing this error, you may not have permissions to use this command.')
     else:
-        await context.respond(f"An uncaught error occurred. Please contact the developer at the link in the /about command.")
+        await context.respond(f"An uncaught error occurred. Please contact the developer at the link in the /about "
+                              f"command.")
         raise error
 
 
