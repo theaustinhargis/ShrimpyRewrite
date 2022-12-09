@@ -14,10 +14,14 @@ class Economy(discord.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # TODO: implement check balance command
     @economy.command(name="balance", description="Returns your Shrimpy Economy balance")
     async def check_balance(self, context):
-        pass
+        row = db.execute(f"SELECT * FROM users WHERE id={context.author.id}").fetchone()
+        if row is not None:
+            await context.respond(f"Hello <@{context.author.id}>! Your current balance is ${row[1]}.")
+        else:
+            await context.respond(f"Hello <@{context.author.id}>. It appears that you do not have an account. In order "
+                                  f"to use economy features, please run the '/economy register' command.")
 
     # TODO: implement transfer balance command
     @economy.command(name="transfer", description="Transfers an amount of your Shrimpy Economy balance to another user")
