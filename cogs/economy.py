@@ -23,10 +23,20 @@ class Economy(discord.Cog):
             await context.respond(f"Hello <@{context.author.id}>. It appears that you do not have an account. In order "
                                   f"to use economy features, please run the '/economy register' command.")
 
-    # TODO: implement transfer balance command
     @economy.command(name="transfer", description="Transfers an amount of your Shrimpy Economy balance to another user")
-    async def transfer_balance(self, context, user: discord.Member, amount: discord.SlashCommandOptionType.integer):
-        pass
+    async def transfer_balance(self, context, amount: discord.SlashCommandOptionType.integer, user: discord.Member):
+        target_row = db.execute(f"SELECT * FROM users WHERE id=?", (user.id,)).fetchone()
+        if target_row is not None:
+            from_row = db.execute(f'SELECT * FROM users WHERE id=?', (context.author.id,)).fetchone()
+            if from_row[1] >= amount:
+                db.execute(f'UPDATE users SET balance = {from_row[1] - amount} WHERE id = {context.author.id}')
+                db.execute(f'UPDATE users SET balance = {from_row[1] + amount} WHERE id = {user.id}')
+                await context.respond(f"You have successfully transferred ${amount} to <@{user.id}>")
+            else:
+                await context.respond(f"You do not have enough money in your account to complete this transaction.")
+        else:
+            await context.respond(f"The user you're trying to wire funds to doesn't seem to exist or hasn't participated"
+                                  f"in Shrimpy's economy yet. Have them register using /economy register and try again.")
 
     @economy.command(name="paycheck", description="Collect your weekly paycheck, if one is available")
     async def paycheck(self, context):
