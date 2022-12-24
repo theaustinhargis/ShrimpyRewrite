@@ -37,7 +37,20 @@ class Developer(commands.Cog):
             self.bot.unload_extension(f'cogs.{extension}')
             await context.respond(f"Unloaded cog.{extension}")
         else:
-            await context.respond(f"You don\'t have permission to use this command.")
+            await context.respond(f"You don't have permission to use this command.")
+
+    @extensions.command(name="list", description="Lists all extensions in Shrimpy's directory")
+    async def list_cog(self, context):
+        if context.author.id == int(os.getenv('OWNER')):
+            msg = "```Here's a list of all of Shrimpy's extensions.\n" \
+                  "Please note that not all extensions may be configured correctly.\n\n"
+            for file in sorted(os.listdir('./cogs')):
+                if file.endswith('.py'):
+                    msg = msg + file + "\n"
+            msg = msg + "```"
+            await context.respond(msg)
+        else:
+            await context.respond(f"You don't have permission to use this command.")
 
 
 def setup(bot):
