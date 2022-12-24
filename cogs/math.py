@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 class Math(commands.Cog):
@@ -44,6 +46,18 @@ class Math(commands.Cog):
 
         msg = msg + f"\n{factors}```"
         await context.respond(msg)
+
+    @math.command(name="graph", description="Graphs a function and returns an image of it")
+    async def graph_function(self, context, function: str):
+        x = np.array(range(-10, 10))
+        y = eval(function)
+
+        plt.plot(x, y)
+        plt.savefig('./graph.png')
+
+        file = discord.File("./graph.png", filename="graph.png")
+
+        await context.respond(file=file)
 
 
 def setup(bot):
