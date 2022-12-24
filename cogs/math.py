@@ -26,7 +26,14 @@ class Math(commands.Cog):
     @math.command(name="divide", description="Divide two values")
     async def divide_values(self, context, num_1: int, num_2: int):
         try:
-            await context.respond(f"The quotient of those values is {num_1/num_2}")
+            await context.respond(f"The quotient of those values is {num_1/num_2}.")
+        except ZeroDivisionError:
+            await context.respond(f"Zero division is not possible.")
+
+    @math.command(name="integer_divide", description="Performs integer division on two values")
+    async def integer_divide_values(self, context, num_1: int, num_2: int):
+        try:
+            await context.respond(f"The quotient of those values is {num_1//num_2}.")
         except ZeroDivisionError:
             await context.respond(f"Zero division is not possible.")
 
@@ -47,6 +54,7 @@ class Math(commands.Cog):
         msg = msg + f"\n{factors}```"
         await context.respond(msg)
 
+    # TODO: Fix this command not working correctly
     @math.command(name="graph", description="Graphs a function and returns an image of it")
     async def graph_function(self, context, function: str):
         x = np.array(range(-10, 10))
