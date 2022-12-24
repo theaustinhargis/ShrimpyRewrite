@@ -40,6 +40,17 @@ class Moderation(commands.Cog):
         await user.remove_timeout()
         await context.respond(f"Member <@{user.id}> was removed from timeout.")
 
+    # TODO: Implement purge messages command
+    @commands.slash_command(name="purge", description="Purges a specified amount of comments from the current channel")
+    @commands.has_permissions(manage_messages=True)
+    async def purge_messages(self, context, message_count: int):
+        count = 0
+        async for message in context.channel.history(limit=message_count):
+            if count > 0:
+                await message.delete(delay=1)
+            count += 1
+        await context.respond(f"I have deleted the {message_count} most recent message(s).")
+
 
 def setup(bot):
     bot.add_cog(Moderation(bot))
