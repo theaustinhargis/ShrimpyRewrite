@@ -1,5 +1,5 @@
 import os
-
+import sys
 import discord
 from discord.ext import commands
 
@@ -13,7 +13,7 @@ class Developer(commands.Cog):
 
     @commands.slash_command(name="latency", description="Returns Shrimpy's latency")
     async def latency(self, context):
-        await context.respond(f"Current latency is {self.bot.latency:.2f}ms")
+        await context.respond(f"Current latency is {self.bot.latency:.1f}ms")
 
     @extensions.command(name="reload", description="Reloads specified extension")
     async def reload_cog(self, context, extension: discord.Option(discord.SlashCommandOptionType.string, description="An extension for Shrimpy")):
@@ -43,7 +43,8 @@ class Developer(commands.Cog):
     async def list_cog(self, context):
         if context.author.id == int(os.getenv('OWNER')):
             msg = "```Here's a list of all of Shrimpy's extensions.\n" \
-                  "Please note that not all extensions may be configured correctly.\n\n"
+                  "Please note that an extension being listed here does not mean it is configured in a way that allows " \
+                  "it to be loaded.\n\n"
             for file in sorted(os.listdir('./cogs')):
                 if file.endswith('.py'):
                     msg = msg + file + "\n"
@@ -51,6 +52,11 @@ class Developer(commands.Cog):
             await context.respond(msg)
         else:
             await context.respond(f"You don't have permission to use this command.")
+
+    @extensions.command(name="shutdown", description="Issues a shutdown command to Shrimpy")
+    async def shutdown(self, context):
+        if context.author.id == int(os.getenv('OWNER')):
+            sys.exit()
 
 
 def setup(bot):
